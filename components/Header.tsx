@@ -1,19 +1,20 @@
-import Image from "next/image";
-import Link from "next/link";
+import { cn } from '@/lib/utils';
+import Image from 'next/image';
+import Link from 'next/link';
 
-const Header = ({ children }: HeaderProps) => {
+const Header = ({ children, className }: HeaderProps) => {
   return (
-    <div className="header">
-      <Link href={"/"} className="md:flex-1">
+    <div className={cn('header', className)}>
+      <Link href={'/'} className="md:flex-1">
         <Image
-          src={"/assets/icons/docjam-logo.svg"}
+          src={'/assets/icons/docjam-logo.svg'}
           alt="docJam logo"
           width={120}
           height={32}
           className="hidden md:block"
         />
         <Image
-          src={"/assets/icons/docjam-logo.svg"}
+          src={'/assets/icons/docjam-logo.svg'}
           alt="docJam logo small"
           width={32}
           height={32}
