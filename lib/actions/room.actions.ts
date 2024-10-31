@@ -21,7 +21,11 @@ export const createDocument = async ({
       title: 'Untitled',
     };
 
-    // level of access
+    // level of access , started with only user who created room having write access:
+    /* const usersAccesses: RoomAccesses = {
+      [email]: ['room:write'],
+    };*/
+
     const usersAccesses: RoomAccesses = {
       [email]: ['room:write'],
     };
@@ -30,7 +34,7 @@ export const createDocument = async ({
     const room = await liveblocks.createRoom(roomId, {
       metadata,
       usersAccesses,
-      defaultAccesses: [],
+      defaultAccesses: ['room:write'],
     });
 
     // new document on frontend whenever a room is created
@@ -39,5 +43,43 @@ export const createDocument = async ({
     return parseStringify(room);
   } catch (error) {
     console.log(`Error happened while creating document ${error}`);
+  }
+};
+
+export const getDocument = async ({
+  roomId,
+  userId,
+}: {
+  roomId: string;
+  userId: string;
+}) => {
+  try {
+    // get access to room
+    const room = await liveblocks.getRoom(roomId);
+
+    // check if user has access if their id is in the object
+    //TODO: Uncomment this later to restrict access
+    // const hasAccess = Object.keys(room.usersAccesses).includes(userId);
+    // if (!hasAccess) {
+    //   throw new Error('You do not have acess to this document');
+    // }
+
+    return parseStringify(room);
+  } catch (error) {
+    console.log('error occurred while getting a room ', error);
+  }
+};
+
+export const updateDocument = async (roomId: string, title: string) => {
+  try {
+    const updatedRoom = await liveblocks.updateRoom(roomId, {
+      metadata: { title },
+    });
+
+    revalidatePath(`/document/${roomId}`);
+
+    return parseStringify(updatedRoom);
+  } catch (error) {
+    console.log('Error occurred while updating the rooom', error);
   }
 };
