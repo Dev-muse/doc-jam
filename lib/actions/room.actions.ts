@@ -46,6 +46,7 @@ export const createDocument = async ({
   }
 };
 
+// server action to get a single document
 export const getDocument = async ({
   roomId,
   userId,
@@ -69,7 +70,26 @@ export const getDocument = async ({
     console.log('error occurred while getting a room ', error);
   }
 };
+// server action to get all documents
+export const getDocuments = async (email: string) => {
+  try {
+    // get access to all rooms where userid == email
+    const rooms = await liveblocks.getRooms({ userId: email });
 
+    // check if user has access if their id is in the object
+    //TODO: Uncomment this later to restrict access
+    // const hasAccess = Object.keys(room.usersAccesses).includes(userId);
+    // if (!hasAccess) {
+    //   throw new Error('You do not have acess to this document');
+    // }
+
+    return parseStringify(rooms);
+  } catch (error) {
+    console.log('error occurred while getting rooms', error);
+  }
+};
+
+// server action to update a document
 export const updateDocument = async (roomId: string, title: string) => {
   try {
     const updatedRoom = await liveblocks.updateRoom(roomId, {

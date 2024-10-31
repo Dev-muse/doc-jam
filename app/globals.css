@@ -46,6 +46,9 @@
   .gradient-blue {
     @apply bg-gradient-to-t from-blue-500 to-blue-400;
   }
+  .gradient-lime {
+    @apply bg-gradient-to-t from-lime-800 to-lime-400 hover:from-slate-600 hover:to-slate-300 duration-300 transition-colors; 
+  }
   .gradient-red {
     @apply bg-gradient-to-t from-red-500 to-red-400;
   }
