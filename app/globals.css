@@ -62,7 +62,7 @@
   }
 
   .shad-select {
-    @apply w-fit border-none bg-transparent text-blue-100 !important;
+    @apply w-fit border-none bg-transparent text-lime-100 !important;
   }
 
   .shad-select svg {
@@ -70,7 +70,7 @@
   }
 
   .shad-select-item {
-    @apply cursor-pointer bg-dark-200 text-blue-100 focus:bg-dark-300 hover:bg-dark-300 focus:text-blue-100 !important;
+    @apply cursor-pointer bg-dark-200 text-lime-100 focus:bg-dark-300 hover:bg-dark-300 focus:text-lime-100 !important;
   }
 
   .shad-popover {
