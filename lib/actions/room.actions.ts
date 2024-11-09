@@ -5,6 +5,8 @@ import { liveblocks } from '../liveblocks';
 import { RoomAccesses } from '@liveblocks/node';
 import { revalidatePath } from 'next/cache';
 import { getAccessType, parseStringify } from '../utils';
+import { redirect } from 'next/navigation';
+import { title } from 'process';
 
 // a room is synonymous with a document
 // server action to create new document + room , to be called from front end when user clicks btn
@@ -77,11 +79,10 @@ export const getDocuments = async (email: string) => {
     const rooms = await liveblocks.getRooms({ userId: email });
 
     // check if user has access if their id is in the object
-    //TODO: Uncomment this later to restrict access
-    // const hasAccess = Object.keys(room.usersAccesses).includes(userId);
-    // if (!hasAccess) {
-    //   throw new Error('You do not have acess to this document');
-    // }
+    const hasAccess = Object.keys(room.usersAccesses).includes(userId);
+    if (!hasAccess) {
+      throw new Error('You do not have acess to this document');
+    }
 
     return parseStringify(rooms);
   } catch (error) {
@@ -122,6 +123,21 @@ export const updateDocumentAccess = async ({
 
     if (room) {
       // send notification to user TODO:
+      const notificationId = nanoid();
+      await liveblocks.triggerInboxNotification({
+        userId: email,
+        // can create different kinds of notification elements for different notifications , see notifications component
+        kind: '$documentAccess',
+        subjectId: notificationId,
+        activityData: {
+          userType,
+          title: `You have been granted ${userType} by ${updatedBy.name}`,
+          updatedBy: updatedBy.name,
+          avatar: updatedBy.avatar,
+          email: updatedBy.email,
+        },
+        roomId,
+      });
     }
     revalidatePath(`/documents/${roomId}`);
     return parseStringify(room);
@@ -159,5 +175,18 @@ export const removeCollaborator = async ({
     return parseStringify(updatedRoom);
   } catch (error) {
     console.log(`Error occurred while removign a collaborator ${error}`);
+  }
+};
+
+// delete document
+
+export const deleteDocument = async (roomId: string) => {
+  try {
+    await liveblocks.deleteRoom(roomId);
+    revalidatePath('/');
+
+    redirect('/');
+  } catch (error) {
+    console.log(`Error happened while deleting room: ${error}`);
   }
 };

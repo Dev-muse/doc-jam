@@ -1,4 +1,6 @@
+import DeleteModal from '@/components/DeleteModal';
 import Header from '@/components/Header';
+import Notifications from '@/components/Notifications';
 import AddDocumentBtn from '@/components/ui/AddDocumentBtn';
 import { Button } from '@/components/ui/button';
 import { getDocuments } from '@/lib/actions/room.actions';
@@ -22,13 +24,13 @@ const Home = async () => {
       <main className="home-container">
         <Header className="sticky left-0 top-0">
           <div className="flex items-center gap-2 lg:gap-4">
-            Notification
+            <Notifications />
             <SignedIn>
               <UserButton />
             </SignedIn>
           </div>
         </Header>
-        {roomDocuments.data.length > 0 ? (
+        {roomDocuments?.data.length > 0 ? (
           <div className="document-list-container">
             <div className="document-list-title">
               <h3 className="text-28-semibold">All Documents</h3>
@@ -60,7 +62,7 @@ const Home = async () => {
                       </p>
                     </div>
                   </Link>
-                  {/* TODO:create delete button */}
+                  <DeleteModal roomId={id} />
                 </li>
               ))}
             </ul>
