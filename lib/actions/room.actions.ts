@@ -1,12 +1,11 @@
 'use server';
 
-import { nanoid } from 'nanoid';
-import { liveblocks } from '../liveblocks';
 import { RoomAccesses } from '@liveblocks/node';
+import { nanoid } from 'nanoid';
 import { revalidatePath } from 'next/cache';
-import { getAccessType, parseStringify } from '../utils';
 import { redirect } from 'next/navigation';
-import { title } from 'process';
+import { liveblocks } from '../liveblocks';
+import { getAccessType, parseStringify } from '../utils';
 
 // a room is synonymous with a document
 // server action to create new document + room , to be called from front end when user clicks btn
@@ -79,10 +78,10 @@ export const getDocuments = async (email: string) => {
     const rooms = await liveblocks.getRooms({ userId: email });
 
     // check if user has access if their id is in the object
-    const hasAccess = Object.keys(room.usersAccesses).includes(userId);
-    if (!hasAccess) {
-      throw new Error('You do not have acess to this document');
-    }
+    // const hasAccess = Object.keys(room.usersAccesses).includes(userId);
+    // if (!hasAccess) {
+    //   throw new Error('You do not have acess to this document');
+    // }
 
     return parseStringify(rooms);
   } catch (error) {

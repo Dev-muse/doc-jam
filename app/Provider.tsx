@@ -6,7 +6,6 @@ import { useUser } from '@clerk/nextjs';
 import {
   ClientSideSuspense,
   LiveblocksProvider,
-  RoomProvider,
 } from '@liveblocks/react/suspense';
 import { ReactNode } from 'react';
 

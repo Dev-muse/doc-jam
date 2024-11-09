@@ -1,18 +1,16 @@
 'use client';
 
-import { ClientSideSuspense, RoomProvider } from '@liveblocks/react/suspense';
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import { Editor } from '@/components/editor/Editor';
 import Header from '@/components/Header';
-import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
-import ActiveCollaborators from './ActiveCollaborators';
-import { Input } from './ui/input';
-import { currentUser } from '@clerk/nextjs/server';
-import { Button } from './ui/button';
-import Image from 'next/image';
 import { updateDocument } from '@/lib/actions/room.actions';
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { ClientSideSuspense, RoomProvider } from '@liveblocks/react/suspense';
+import Image from 'next/image';
+import React, { useEffect, useRef, useState } from 'react';
+import ActiveCollaborators from './ActiveCollaborators';
 import Loader from './Loader';
 import ShareModal from './ShareModal';
+import { Input } from './ui/input';
 
 const CollaborativeRoom = ({
   roomId,

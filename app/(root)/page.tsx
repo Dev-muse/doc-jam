@@ -2,7 +2,6 @@ import DeleteModal from '@/components/DeleteModal';
 import Header from '@/components/Header';
 import Notifications from '@/components/Notifications';
 import AddDocumentBtn from '@/components/ui/AddDocumentBtn';
-import { Button } from '@/components/ui/button';
 import { getDocuments } from '@/lib/actions/room.actions';
 import { dateConverter } from '@/lib/utils';
 import { SignedIn, UserButton } from '@clerk/nextjs';
@@ -30,7 +29,7 @@ const Home = async () => {
             </SignedIn>
           </div>
         </Header>
-        {roomDocuments?.data.length > 0 ? (
+        {roomDocuments.data.length > 0 ? (
           <div className="document-list-container">
             <div className="document-list-title">
               <h3 className="text-28-semibold">All Documents</h3>

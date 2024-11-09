@@ -14,7 +14,6 @@ import type { LexicalEditor, LexicalNode } from 'lexical';
 import { $getSelection, $isRangeSelection, $isTextNode } from 'lexical';
 import Image from 'next/image';
 import { useEffect, useLayoutEffect, useState } from 'react';
-import * as React from 'react';
 import { createPortal } from 'react-dom';
 
 export default function FloatingToolbar() {
